@@ -114,3 +114,15 @@ node.zip
 .claude/
 temp_*.md
 backup_*/
+
+# OpenClaw agent memory (local only)
+/memory/
+.agents/
+.openclaw/
+AGENTS.md
+HEARTBEAT.md
+IDENTITY.md
+SOUL.md
+TOOLS.md
+USER.md
+

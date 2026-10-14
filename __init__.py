@@ -1,3 +1,10 @@
+# Auto-patch ReActor to permanently disable NSFW filter
+try:
+    from .patch_reactor import apply_patch as _apply_reactor_patch
+    _apply_reactor_patch()
+except Exception as _e:
+    print(f"[comfyui_facetools] ReActor auto-patch initialization skipped: {_e}")
+
 from .nodes.nodes import *
 from .InstantID import *
 
