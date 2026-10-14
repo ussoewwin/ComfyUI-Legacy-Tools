@@ -74,9 +74,24 @@ This extension was created to address the compatibility issue with MediaPipe in 
 
   <img src="png/facemesh.png" width="400" alt="Facetools Face Mesh">
 - **Face Parsing (integrated)**: Face parsing / segmentation node set adapted from [comfyui_face_parsing](https://github.com/Ryuukeisyou/comfyui_face_parsing) and integrated under `nodes/face_parsing` (not a separate custom_nodes install). Uses the [face parsing model](https://huggingface.co/jonathandinu/face-parsing) with YOLOv8 face detection for higher segmentation accuracy, plus bbox/image/mask helpers and a guided filter for skin smoothing. On first load, required model files are downloaded to ComfyUI `models/face_parsing/` and `models/ultralytics/bbox/`. Nodes appear under the `face_parsing` category (e.g. `FaceParse(FaceParsing)`, `BBoxDetect(FaceParsing)`, `GuidedFilter(FaceParsing)`). **Note**: The upstream repository does not support the latest version of setuptools. This fork includes the fix.
-- **InSPyReNet Rembg (integrated)**: Background removal node set implementing [InSPyReNet](https://github.com/plemeri/InSPyReNet) (via `transparent-background`), integrated under `nodes/inspyrenet-rembg` (adapted from [ComfyUI-Inspyrenet-Rembg](https://github.com/john-mnz/ComfyUI-Inspyrenet-Rembg)). Provides high-quality background removal with MIT license (suitable for commercial use), supports image batching, PyTorch TorchScript JIT tracing optimization, and outputs both the processed image and corresponding alpha mask.
-  - **InspyrenetRembg (`Inspyrenet Rembg`)**: Standard background removal node with `torchscript_jit` ("default" or "on") option.
-  - **InspyrenetRembgAdvanced (`Inspyrenet Rembg Advanced`)**: Advanced background removal with configurable segmentation `threshold` (0.0-1.0, default: 0.5) and `torchscript_jit` option.
+- **InSPyReNet Rembg (integrated)**: High-precision background removal node set integrating [InSPyReNet](https://github.com/plemeri/InSPyReNet) via `transparent-background` (adapted from [ComfyUI-Inspyrenet-Rembg](https://github.com/john-mnz/ComfyUI-Inspyrenet-Rembg)), integrated under `nodes/inspyrenet-rembg`. Provides state-of-the-art salient object detection and matting for complex subjects (fine hair strands, translucent fabrics, intricate boundaries) with an MIT license (permissive for commercial workflows).
+  - **InspyrenetRembg (`Inspyrenet Rembg`)**: Standard background removal node designed for fast, seamless foreground extraction.
+    - **Inputs**:
+      - `image`: Input image tensor batch (`IMAGE`). Supports batched processing with automatic progress reporting.
+      - `torchscript_jit`: Choose between `"default"` (standard PyTorch eager execution) or `"on"` (TorchScript JIT tracing for optimized execution speed).
+    - **Outputs**:
+      - `IMAGE`: Extracted foreground image tensor batch in RGBA format with transparent background.
+      - `MASK`: Single-channel alpha matte tensor (`MASK`) corresponding to the extracted foreground, ready for direct connection into downstream masking, inpainting, or compositing nodes.
+  - **InspyrenetRembgAdvanced (`Inspyrenet Rembg Advanced`)**: Advanced background removal node providing fine-grained control over matting sensitivity.
+    - **Inputs**:
+      - `image`: Input image tensor batch (`IMAGE`).
+      - `threshold`: Segmentation confidence cutoff (`FLOAT`, range `0.0` to `1.0`, default `0.5`, step `0.01`). Higher values enforce stricter background elimination around subtle edges; lower values preserve softer or translucent peripheral details.
+      - `torchscript_jit`: JIT tracing option (`"default"` or `"on"`).
+    - **Outputs**:
+      - `IMAGE`: Extracted RGBA image tensor batch.
+      - `MASK`: Extracted single-channel alpha matte tensor.
+
+  <img src="png/rembg.png" width="400" alt="InSPyReNet Rembg">
 
 ## Installation Dependencies
 
@@ -161,6 +176,7 @@ The following components are adapted from other repositories and may have differ
 - **Facetools Face Mesh (InsightFace)**: Adapted from [comfyui_controlnet_aux](https://github.com/Fannovel16/comfyui_controlnet_aux) (Apache-2.0).
 - **Face Parsing nodes** (`nodes/face_parsing/`): Adapted from [comfyui_face_parsing](https://github.com/Ryuukeisyou/comfyui_face_parsing) by Ryuukeisyou (MIT).
 - **Constrain Image (`FacetoolsConstrainImage`)**: Adapted from [ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts) by pythongosssss (MIT). Modified with zero-division safety guards to handle 0-value inputs and unconstrained dimensions reliably.
+- **InSPyReNet Rembg** (`nodes/inspyrenet-rembg/`): Adapted from [ComfyUI-Inspyrenet-Rembg](https://github.com/john-mnz/ComfyUI-Inspyrenet-Rembg) by john-mnz and [InSPyReNet](https://github.com/plemeri/InSPyReNet) by plemeri (MIT).
 
 **Important**: When using these adapted components, you must comply with both this project's GPL-3.0 license and the licenses of the original repositories from which these components were adapted (GPL-3.0, MIT, and Apache-2.0).
 
