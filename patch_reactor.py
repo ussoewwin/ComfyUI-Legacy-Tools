@@ -134,6 +134,21 @@ def patch_reactor_runtime():
             _neutralize(mod)
             if hasattr(mod, "reactor_sfw"):
                 _neutralize(getattr(mod, "reactor_sfw"))
+        if "albucore" in name or (fromlist and any("albucore" in str(x) for x in fromlist)):
+            try:
+                import albucore
+                if not hasattr(albucore, "median_blur"):
+                    import cv2
+                    def median_blur(img, ksize):
+                        return cv2.medianBlur(img, ksize)
+                    albucore.median_blur = median_blur
+                if not hasattr(albucore, "reduce_sum"):
+                    import numpy as np
+                    def reduce_sum(img, axis=None, keepdims=False):
+                        return np.sum(img, axis=axis, keepdims=keepdims)
+                    albucore.reduce_sum = reduce_sum
+            except Exception:
+                pass
         return mod
 
     builtins.__import__ = hooked_import

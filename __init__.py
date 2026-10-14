@@ -5,6 +5,26 @@ try:
 except Exception as _e:
     print(f"[comfyui_facetools] ReActor auto-patch initialization skipped: {_e}")
 
+# In-memory runtime shim for albumentations / albucore version mismatch
+# (Provides median_blur and reduce_sum if missing without modifying installed package files)
+def _patch_albucore():
+    try:
+        import albucore
+        if not hasattr(albucore, "median_blur"):
+            import cv2
+            def median_blur(img, ksize):
+                return cv2.medianBlur(img, ksize)
+            albucore.median_blur = median_blur
+        if not hasattr(albucore, "reduce_sum"):
+            import numpy as np
+            def reduce_sum(img, axis=None, keepdims=False):
+                return np.sum(img, axis=axis, keepdims=keepdims)
+            albucore.reduce_sum = reduce_sum
+    except Exception:
+        pass
+
+_patch_albucore()
+
 from .nodes.nodes import *
 from .InstantID import *
 
@@ -81,6 +101,7 @@ try:
     if os.path.exists(_inspyrenet_file):
         _spec = importlib.util.spec_from_file_location("inspyrenet_rembg", _inspyrenet_file)
         if _spec and _spec.loader:
+            _patch_albucore()
             _inspyrenet_mod = importlib.util.module_from_spec(_spec)
             _spec.loader.exec_module(_inspyrenet_mod)
             INSPYRENET_REMBG_NODE_CLASS_MAPPINGS = {
