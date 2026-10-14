@@ -176,17 +176,7 @@ The following components are adapted from other repositories and may have differ
 - **Facetools Face Mesh (InsightFace)**: Adapted from [comfyui_controlnet_aux](https://github.com/Fannovel16/comfyui_controlnet_aux) (Apache-2.0).
 - **Face Parsing nodes** (`nodes/face_parsing/`): Adapted from [comfyui_face_parsing](https://github.com/Ryuukeisyou/comfyui_face_parsing) by Ryuukeisyou (MIT).
 - **Constrain Image (`FacetoolsConstrainImage`)**: Adapted from [ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts) by pythongosssss (MIT). Modified with zero-division safety guards to handle 0-value inputs and unconstrained dimensions reliably.
-- **InSPyReNet Rembg** (`nodes/inspyrenet-rembg/`): Adapted from [ComfyUI-Inspyrenet-Rembg](https://github.com/john-mnz/ComfyUI-Inspyrenet-Rembg) by john-mnz (MIT License, Copyright (c) 2024 john-mnz), powered by [transparent-background](https://github.com/plemeri/transparent-background) (MIT License, Copyright (c) 2022 Taehun Kim) and [InSPyReNet](https://github.com/plemeri/InSPyReNet) (MIT License, Copyright (c) 2021 Taehun Kim).
-  - Citation:
-    ```bibtex
-    @inproceedings{kim2022revisiting,
-      title={Revisiting Image Pyramid Structure for High Resolution Salient Object Detection},
-      author={Kim, Taehun and Kim, Kunhee and Lee, Joonyeong and Cha, Dongmin and Lee, Jiho and Kim, Daijin},
-      booktitle={Proceedings of the Asian Conference on Computer Vision},
-      pages={108--124},
-      year={2022}
-    }
-    ```
+- **InSPyReNet Rembg** (`nodes/inspyrenet-rembg/`): Adapted from [ComfyUI-Inspyrenet-Rembg](https://github.com/john-mnz/ComfyUI-Inspyrenet-Rembg) by john-mnz (MIT License, Copyright (c) 2024 john-mnz), powered by [transparent-background](https://github.com/plemeri/transparent-background) (MIT) and [InSPyReNet](https://github.com/plemeri/InSPyReNet) (MIT License, Copyright (c) 2021-2022 Taehun Kim).
 
 **Important**: When using these adapted components, you must comply with both this project's GPL-3.0 license and the licenses of the original repositories from which these components were adapted (GPL-3.0, MIT, and Apache-2.0).
 
