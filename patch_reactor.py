@@ -134,27 +134,86 @@ def patch_reactor_runtime():
             _neutralize(mod)
             if hasattr(mod, "reactor_sfw"):
                 _neutralize(getattr(mod, "reactor_sfw"))
-        if "albucore" in name or (fromlist and any("albucore" in str(x) for x in fromlist)):
+        if "albumentations" in name or "albucore" in name:
             try:
-                import types
-                import albucore
-                if not hasattr(albucore, "median_blur"):
-                    import cv2
-                    def median_blur(img, ksize):
-                        return cv2.medianBlur(img, ksize)
-                    albucore.median_blur = median_blur
-                if not hasattr(albucore, "reduce_sum"):
+                if "albumentations" not in sys.modules or not hasattr(sys.modules["albumentations"], "Compose"):
+                    import types
                     import numpy as np
-                    def reduce_sum(img, axis=None, keepdims=False):
-                        return np.sum(img, axis=axis, keepdims=keepdims)
-                    albucore.reduce_sum = reduce_sum
-                if "albucore.filter3d" not in sys.modules:
-                    filter3d = types.ModuleType("albucore.filter3d")
-                    def gaussian_blur3d(volume, ksize, sigma):
-                        return volume
-                    filter3d.gaussian_blur3d = gaussian_blur3d
-                    sys.modules["albucore.filter3d"] = filter3d
-                    albucore.filter3d = filter3d
+                    import torch
+                    import cv2
+
+                    a_mod = types.ModuleType("albumentations")
+                    ap_mod = types.ModuleType("albumentations.pytorch")
+
+                    class Compose:
+                        def __init__(self, transforms, **kwargs):
+                            self.transforms = [t for t in transforms if t is not None]
+
+                        def __call__(self, image=None, **kwargs):
+                            res = image if image is not None else kwargs.get("img")
+                            for t in self.transforms:
+                                if hasattr(t, "apply_to_image"):
+                                    res = t.apply_to_image(res)
+                                elif callable(t):
+                                    try:
+                                        out = t(image=res)
+                                        res = out["image"] if isinstance(out, dict) and "image" in out else out
+                                    except TypeError:
+                                        res = t(res)
+                            return {"image": res}
+
+                    class Resize:
+                        def __init__(self, height, width, **kwargs):
+                            self.height = int(height)
+                            self.width = int(width)
+
+                        def __call__(self, image=None, **kwargs):
+                            img = image if image is not None else kwargs.get("img")
+                            if img is not None:
+                                img = cv2.resize(img, (self.width, self.height), interpolation=cv2.INTER_LINEAR)
+                            return {"image": img}
+
+                    class Normalize:
+                        def __init__(self, mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225), max_pixel_value=255.0, **kwargs):
+                            self.mean = np.array(mean, dtype=np.float32)
+                            self.std = np.array(std, dtype=np.float32)
+                            self.max_pixel_value = float(max_pixel_value)
+
+                        def __call__(self, image=None, **kwargs):
+                            img = image if image is not None else kwargs.get("img")
+                            if img is not None:
+                                img = img.astype(np.float32) / self.max_pixel_value
+                                img = (img - self.mean) / self.std
+                            return {"image": img}
+
+                    class ToTensorV2:
+                        def __init__(self, transpose_mask=False, **kwargs):
+                            self.transpose_mask = transpose_mask
+
+                        def __call__(self, image=None, **kwargs):
+                            img = image if image is not None else kwargs.get("img")
+                            if img is not None:
+                                if img.ndim == 3:
+                                    img = img.transpose(2, 0, 1)
+                                elif img.ndim == 2:
+                                    img = img[np.newaxis, ...]
+                                t = torch.from_numpy(img)
+                            else:
+                                t = None
+                            return {"image": t}
+
+                    a_mod.Compose = Compose
+                    a_mod.Resize = Resize
+                    a_mod.Normalize = Normalize
+                    ap_mod.ToTensorV2 = ToTensorV2
+                    a_mod.pytorch = ap_mod
+
+                    sys.modules["albumentations"] = a_mod
+                    sys.modules["albumentations.pytorch"] = ap_mod
+                    if name == "albumentations":
+                        return a_mod
+                    if name == "albumentations.pytorch":
+                        return ap_mod
             except Exception:
                 pass
         return mod
