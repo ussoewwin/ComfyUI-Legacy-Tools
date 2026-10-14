@@ -74,6 +74,9 @@ This extension was created to address the compatibility issue with MediaPipe in 
 
   <img src="png/facemesh.png" width="400" alt="Facetools Face Mesh">
 - **Face Parsing (integrated)**: Face parsing / segmentation node set adapted from [comfyui_face_parsing](https://github.com/Ryuukeisyou/comfyui_face_parsing) and integrated under `nodes/face_parsing` (not a separate custom_nodes install). Uses the [face parsing model](https://huggingface.co/jonathandinu/face-parsing) with YOLOv8 face detection for higher segmentation accuracy, plus bbox/image/mask helpers and a guided filter for skin smoothing. On first load, required model files are downloaded to ComfyUI `models/face_parsing/` and `models/ultralytics/bbox/`. Nodes appear under the `face_parsing` category (e.g. `FaceParse(FaceParsing)`, `BBoxDetect(FaceParsing)`, `GuidedFilter(FaceParsing)`). **Note**: The upstream repository does not support the latest version of setuptools. This fork includes the fix.
+- **InSPyReNet Rembg (integrated)**: Background removal node set implementing [InSPyReNet](https://github.com/plemeri/InSPyReNet) (via `transparent-background`), integrated under `nodes/inspyrenet-rembg` (adapted from [ComfyUI-Inspyrenet-Rembg](https://github.com/john-mnz/ComfyUI-Inspyrenet-Rembg)). Provides high-quality background removal with MIT license (suitable for commercial use), supports image batching, PyTorch TorchScript JIT tracing optimization, and outputs both the processed image and corresponding alpha mask.
+  - **InspyrenetRembg (`Inspyrenet Rembg`)**: Standard background removal node with `torchscript_jit` ("default" or "on") option.
+  - **InspyrenetRembgAdvanced (`Inspyrenet Rembg Advanced`)**: Advanced background removal with configurable segmentation `threshold` (0.0-1.0, default: 0.5) and `torchscript_jit` option.
 
 ## Installation Dependencies
 

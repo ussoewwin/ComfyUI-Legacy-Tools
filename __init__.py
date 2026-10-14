@@ -70,6 +70,40 @@ except Exception as e:
     FACE_PARSING_NODE_CLASS_MAPPINGS = {}
     FACE_PARSING_NODE_DISPLAY_NAME_MAPPINGS = {}
 
+# InSPyReNet Rembg (integrated from nodes/inspyrenet-rembg)
+try:
+    import importlib.util
+    import os
+
+    _inspyrenet_file = os.path.join(
+        os.path.dirname(__file__), "nodes", "inspyrenet-rembg", "Inspyrenet_Rembg.py"
+    )
+    if os.path.exists(_inspyrenet_file):
+        _spec = importlib.util.spec_from_file_location("inspyrenet_rembg", _inspyrenet_file)
+        if _spec and _spec.loader:
+            _inspyrenet_mod = importlib.util.module_from_spec(_spec)
+            _spec.loader.exec_module(_inspyrenet_mod)
+            INSPYRENET_REMBG_NODE_CLASS_MAPPINGS = {
+                "InspyrenetRembg": _inspyrenet_mod.InspyrenetRembg,
+                "InspyrenetRembgAdvanced": _inspyrenet_mod.InspyrenetRembgAdvanced,
+            }
+            INSPYRENET_REMBG_NODE_DISPLAY_NAME_MAPPINGS = {
+                "InspyrenetRembg": "Inspyrenet Rembg",
+                "InspyrenetRembgAdvanced": "Inspyrenet Rembg Advanced",
+            }
+        else:
+            INSPYRENET_REMBG_NODE_CLASS_MAPPINGS = {}
+            INSPYRENET_REMBG_NODE_DISPLAY_NAME_MAPPINGS = {}
+    else:
+        INSPYRENET_REMBG_NODE_CLASS_MAPPINGS = {}
+        INSPYRENET_REMBG_NODE_DISPLAY_NAME_MAPPINGS = {}
+except Exception as e:
+    print(f"[comfyui_facetools] Failed to load inspyrenet_rembg: {e}")
+    import traceback
+    traceback.print_exc()
+    INSPYRENET_REMBG_NODE_CLASS_MAPPINGS = {}
+    INSPYRENET_REMBG_NODE_DISPLAY_NAME_MAPPINGS = {}
+
 NODE_CLASS_MAPPINGS = {
     'DetectFaces': DetectFaces,
     'DetectFaceByIndex': DetectFaceByIndex,
@@ -108,6 +142,9 @@ NODE_CLASS_MAPPINGS.update(FACE_MESH_NODE_CLASS_MAPPINGS)
 # Add Face Parsing nodes
 NODE_CLASS_MAPPINGS.update(FACE_PARSING_NODE_CLASS_MAPPINGS)
 
+# Add InSPyReNet Rembg nodes
+NODE_CLASS_MAPPINGS.update(INSPYRENET_REMBG_NODE_CLASS_MAPPINGS)
+
 NODE_DISPLAY_NAME_MAPPINGS = {
     'DetectFaces': 'DetectFaces',
     'DetectFaceByIndex': 'Detect Face By Index',
@@ -143,6 +180,9 @@ NODE_DISPLAY_NAME_MAPPINGS.update(FACE_MESH_NODE_DISPLAY_NAME_MAPPINGS)
 
 # Add Face Parsing node display names
 NODE_DISPLAY_NAME_MAPPINGS.update(FACE_PARSING_NODE_DISPLAY_NAME_MAPPINGS)
+
+# Add InSPyReNet Rembg node display names
+NODE_DISPLAY_NAME_MAPPINGS.update(INSPYRENET_REMBG_NODE_DISPLAY_NAME_MAPPINGS)
 
 
 # Load ComfyUI frontend extensions (e.g. COLORCODE widget)
