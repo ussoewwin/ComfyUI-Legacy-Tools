@@ -136,6 +136,7 @@ def patch_reactor_runtime():
                 _neutralize(getattr(mod, "reactor_sfw"))
         if "albucore" in name or (fromlist and any("albucore" in str(x) for x in fromlist)):
             try:
+                import types
                 import albucore
                 if not hasattr(albucore, "median_blur"):
                     import cv2
@@ -147,6 +148,13 @@ def patch_reactor_runtime():
                     def reduce_sum(img, axis=None, keepdims=False):
                         return np.sum(img, axis=axis, keepdims=keepdims)
                     albucore.reduce_sum = reduce_sum
+                if "albucore.filter3d" not in sys.modules:
+                    filter3d = types.ModuleType("albucore.filter3d")
+                    def gaussian_blur3d(volume, ksize, sigma):
+                        return volume
+                    filter3d.gaussian_blur3d = gaussian_blur3d
+                    sys.modules["albucore.filter3d"] = filter3d
+                    albucore.filter3d = filter3d
             except Exception:
                 pass
         return mod
