@@ -229,6 +229,43 @@ except Exception as e:
     INSPYRENET_REMBG_NODE_CLASS_MAPPINGS = {}
     INSPYRENET_REMBG_NODE_DISPLAY_NAME_MAPPINGS = {}
 
+# Impact Pack (integrated from nodes/impact-pack)
+try:
+    import importlib.util
+    import os
+    import sys
+
+    _impact_dir = os.path.join(os.path.dirname(__file__), "nodes", "impact-pack")
+    _impact_init = os.path.join(_impact_dir, "__init__.py")
+    if os.path.exists(_impact_init):
+        _modules_path = os.path.join(_impact_dir, "modules")
+        if _modules_path not in sys.path:
+            sys.path.append(_modules_path)
+
+        _spec = importlib.util.spec_from_file_location(
+            "comfyui_facetools_impact_pack",
+            _impact_init,
+            submodule_search_locations=[_impact_dir],
+        )
+        if _spec and _spec.loader:
+            _impact_mod = importlib.util.module_from_spec(_spec)
+            sys.modules["comfyui_facetools_impact_pack"] = _impact_mod
+            _spec.loader.exec_module(_impact_mod)
+            IMPACT_PACK_NODE_CLASS_MAPPINGS = getattr(_impact_mod, "NODE_CLASS_MAPPINGS", {})
+            IMPACT_PACK_NODE_DISPLAY_NAME_MAPPINGS = getattr(_impact_mod, "NODE_DISPLAY_NAME_MAPPINGS", {})
+        else:
+            IMPACT_PACK_NODE_CLASS_MAPPINGS = {}
+            IMPACT_PACK_NODE_DISPLAY_NAME_MAPPINGS = {}
+    else:
+        IMPACT_PACK_NODE_CLASS_MAPPINGS = {}
+        IMPACT_PACK_NODE_DISPLAY_NAME_MAPPINGS = {}
+except Exception as e:
+    print(f"[comfyui_facetools] Failed to load impact-pack: {e}")
+    import traceback
+    traceback.print_exc()
+    IMPACT_PACK_NODE_CLASS_MAPPINGS = {}
+    IMPACT_PACK_NODE_DISPLAY_NAME_MAPPINGS = {}
+
 NODE_CLASS_MAPPINGS = {
     'DetectFaces': DetectFaces,
     'DetectFaceByIndex': DetectFaceByIndex,
@@ -270,6 +307,9 @@ NODE_CLASS_MAPPINGS.update(FACE_PARSING_NODE_CLASS_MAPPINGS)
 # Add InSPyReNet Rembg nodes
 NODE_CLASS_MAPPINGS.update(INSPYRENET_REMBG_NODE_CLASS_MAPPINGS)
 
+# Add Impact Pack nodes
+NODE_CLASS_MAPPINGS.update(IMPACT_PACK_NODE_CLASS_MAPPINGS)
+
 NODE_DISPLAY_NAME_MAPPINGS = {
     'DetectFaces': 'DetectFaces',
     'DetectFaceByIndex': 'Detect Face By Index',
@@ -308,6 +348,9 @@ NODE_DISPLAY_NAME_MAPPINGS.update(FACE_PARSING_NODE_DISPLAY_NAME_MAPPINGS)
 
 # Add InSPyReNet Rembg node display names
 NODE_DISPLAY_NAME_MAPPINGS.update(INSPYRENET_REMBG_NODE_DISPLAY_NAME_MAPPINGS)
+
+# Add Impact Pack node display names
+NODE_DISPLAY_NAME_MAPPINGS.update(IMPACT_PACK_NODE_DISPLAY_NAME_MAPPINGS)
 
 
 # Load ComfyUI frontend extensions (e.g. COLORCODE widget)

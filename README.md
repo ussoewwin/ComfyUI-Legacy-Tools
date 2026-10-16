@@ -92,6 +92,7 @@ This extension was created to address the compatibility issue with MediaPipe in 
       - `MASK`: Extracted single-channel alpha matte tensor.
 
   <img src="png/rembg.png" width="400" alt="InSPyReNet Rembg">
+- **Impact Pack (integrated)**: Comprehensive detector and detailer toolset integrating [ComfyUI-Impact-Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack) under `nodes/impact-pack` (GPL-3.0). Provides automated facial and body detail enhancement workflows (`FaceDetailer`, `DetailerForEach`, `MaskDetailerPipe`), detection providers (`SAMLoader`, `ONNXDetectorProvider`, `CLIPSegDetectorProvider`), segmentation manipulation (`SEGS` operations, dilation, blur, classification), iterative upscalers, pipe routing helpers, and frontend extensions.
 
 ## Installation Dependencies
 
@@ -177,6 +178,7 @@ The following components are adapted from other repositories and may have differ
 - **Face Parsing nodes** (`nodes/face_parsing/`): Adapted from [comfyui_face_parsing](https://github.com/Ryuukeisyou/comfyui_face_parsing) by Ryuukeisyou (MIT).
 - **Constrain Image (`FacetoolsConstrainImage`)**: Adapted from [ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts) by pythongosssss (MIT). Modified with zero-division safety guards to handle 0-value inputs and unconstrained dimensions reliably.
 - **InSPyReNet Rembg** (`nodes/inspyrenet-rembg/`): Adapted from [ComfyUI-Inspyrenet-Rembg](https://github.com/john-mnz/ComfyUI-Inspyrenet-Rembg) by john-mnz (MIT License, Copyright (c) 2024 john-mnz), powered by [transparent-background](https://github.com/plemeri/transparent-background) (MIT) and [InSPyReNet](https://github.com/plemeri/InSPyReNet) (MIT License, Copyright (c) 2021-2022 Taehun Kim).
+- **Impact Pack nodes** (`nodes/impact-pack/`): Adapted from [ComfyUI-Impact-Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack) by Dr.Lt.Data (GPL-3.0).
 
 **Important**: When using these adapted components, you must comply with both this project's GPL-3.0 license and the licenses of the original repositories from which these components were adapted (GPL-3.0, MIT, and Apache-2.0).
 
