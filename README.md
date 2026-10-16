@@ -93,6 +93,7 @@ This extension was created to address the compatibility issue with MediaPipe in 
 
   <img src="png/rembg.png" width="400" alt="InSPyReNet Rembg">
 - **Impact Pack (integrated)**: Comprehensive detector and detailer toolset integrating [ComfyUI-Impact-Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack) under `nodes/impact-pack` (GPL-3.0). Provides automated facial and body detail enhancement workflows (`FaceDetailer`, `DetailerForEach`, `MaskDetailerPipe`), detection providers (`SAMLoader`, `ONNXDetectorProvider`, `CLIPSegDetectorProvider`), segmentation manipulation (`SEGS` operations, dilation, blur, classification), iterative upscalers, pipe routing helpers, and frontend extensions.
+  - **Why this was integrated (Active Development & Modern Environment Support)**: The official upstream repository has not been updated for an extended period and cannot keep up with the latest ComfyUI runtime environments. Development and active maintenance are continued directly within this repository to ensure full compatibility with modern ComfyUI environments (such as Python 3.13+ and recent core/frontend architecture).
 
 ## Installation Dependencies
 
