@@ -1,6 +1,4 @@
-#!/usr/bin/env python
-
-"""Tests for `comfyui_facetools_disabled_mediapipe` package."""
+"""Tests for `ComfyUI-Legacy-Tools` package."""
 
 import pytest
 from src.comfyui_facetools_disabled_mediapipe.nodes import Example

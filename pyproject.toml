@@ -3,9 +3,9 @@ requires = ["setuptools>=70.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "comfyui_facetools_disabled_mediapipe"
+name = "comfyui-legacy-tools"
 version = "0.2.7"  # Must increment on each release
-description = "Face detection & restoration tools for ComfyUI by Sunx.ai. Replaces MediaPipe with InsightFace for Python 3.13+ compatibility and provides unified management of face detection/processing nodes."
+description = "Legacy and compatibility toolset for ComfyUI by Sunx.ai. Consolidates facetools (replacing MediaPipe with InsightFace for Python 3.13+), Impact Pack, InSPyReNet Rembg, Face Parsing, and more into an actively maintained modern extension."
 authors = [
   { name = "Sunx.ai", email = "sunx.ai@hotmail.com" }
 ]
@@ -30,14 +30,14 @@ dev = [
 ]
 
 [project.urls]
-Repository = "https://github.com/ussoewwin/comfyui_facetools_disabled_mediapipe"  # ← Key field: resolves repository is required
-Homepage = "https://github.com/ussoewwin/comfyui_facetools_disabled_mediapipe"
-Bugs = "https://github.com/ussoewwin/comfyui_facetools_disabled_mediapipe/issues"
+Repository = "https://github.com/ussoewwin/ComfyUI-Legacy-Tools"  # ← Key field: resolves repository is required
+Homepage = "https://github.com/ussoewwin/ComfyUI-Legacy-Tools"
+Bugs = "https://github.com/ussoewwin/ComfyUI-Legacy-Tools/issues"
 
 [tool.comfy]
 # Must match the Publisher created on Registry (the part after @)
 PublisherId = "sunxai"
-DisplayName = "comfyui_facetools_disabled_mediapipe"
+DisplayName = "ComfyUI-Legacy-Tools"
 Icon = "https://avatars.githubusercontent.com/u/124853686"
 
 [tool.setuptools.package-data]

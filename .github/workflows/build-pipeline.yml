@@ -1,5 +1,5 @@
 # GitHub CI build pipeline
-name: {{ cookiecutter.project_slug }} CI build
+name: ComfyUI-Legacy-Tools CI build
 
 on:
   pull_request:

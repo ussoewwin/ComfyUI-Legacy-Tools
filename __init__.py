@@ -3,7 +3,7 @@ try:
     from .patch_reactor import apply_patch as _apply_reactor_patch
     _apply_reactor_patch()
 except Exception as _e:
-    print(f"[comfyui_facetools] ReActor auto-patch initialization skipped: {_e}")
+    print(f"[ComfyUI-Legacy-Tools] ReActor auto-patch initialization skipped: {_e}")
 
 # In-memory runtime shim for albumentations / albucore version mismatch
 # (Bypasses broken albumentations import chain by providing required Compose/Resize/Normalize/ToTensorV2
@@ -139,7 +139,7 @@ try:
         NODE_DISPLAY_NAME_MAPPINGS as IMAGE_RESIZE_NODE_DISPLAY_NAME_MAPPINGS,
     )
 except Exception as e:
-    print(f"[comfyui_facetools] Failed to load image_resize: {e}")
+    print(f"[ComfyUI-Legacy-Tools] Failed to load image_resize: {e}")
     import traceback
     traceback.print_exc()
     IMAGE_RESIZE_NODE_CLASS_MAPPINGS = {}
@@ -152,7 +152,7 @@ try:
         NODE_DISPLAY_NAME_MAPPINGS as CONSTRAIN_IMAGE_NODE_DISPLAY_NAME_MAPPINGS,
     )
 except Exception as e:
-    print(f"[comfyui_facetools] Failed to load constrain_image: {e}")
+    print(f"[ComfyUI-Legacy-Tools] Failed to load constrain_image: {e}")
     import traceback
     traceback.print_exc()
     CONSTRAIN_IMAGE_NODE_CLASS_MAPPINGS = {}
@@ -188,7 +188,7 @@ try:
         key: key for key in FACE_PARSING_NODE_CLASS_MAPPINGS
     }
 except Exception as e:
-    print(f"[comfyui_facetools] Failed to load face_parsing: {e}")
+    print(f"[ComfyUI-Legacy-Tools] Failed to load face_parsing: {e}")
     import traceback
     traceback.print_exc()
     FACE_PARSING_NODE_CLASS_MAPPINGS = {}
@@ -223,7 +223,7 @@ try:
         INSPYRENET_REMBG_NODE_CLASS_MAPPINGS = {}
         INSPYRENET_REMBG_NODE_DISPLAY_NAME_MAPPINGS = {}
 except Exception as e:
-    print(f"[comfyui_facetools] Failed to load inspyrenet_rembg: {e}")
+    print(f"[ComfyUI-Legacy-Tools] Failed to load inspyrenet_rembg: {e}")
     import traceback
     traceback.print_exc()
     INSPYRENET_REMBG_NODE_CLASS_MAPPINGS = {}
@@ -260,7 +260,7 @@ try:
         IMPACT_PACK_NODE_CLASS_MAPPINGS = {}
         IMPACT_PACK_NODE_DISPLAY_NAME_MAPPINGS = {}
 except Exception as e:
-    print(f"[comfyui_facetools] Failed to load impact-pack: {e}")
+    print(f"[ComfyUI-Legacy-Tools] Failed to load impact-pack: {e}")
     import traceback
     traceback.print_exc()
     IMPACT_PACK_NODE_CLASS_MAPPINGS = {}

@@ -1,15 +1,19 @@
-# comfyui_facetools_disabled_mediapipe
+# ComfyUI-Legacy-Tools
 
-Face detection & restoration tools for ComfyUI by Sunx.ai
+Comprehensive legacy extension consolidation and modern environment compatibility toolkit for ComfyUI by Sunx.ai.
 
 ## Project Purpose
 
-This extension was created to address the compatibility issue with MediaPipe in Python 3.13 and later versions. While there are many facetools extensions for ComfyUI that use MediaPipe, MediaPipe is no longer compatible with Python 3.13+. This project replaces MediaPipe with InsightFace and provides a unified management solution for face detection and processing tools.
+As ComfyUI runtime environments evolve (such as Python 3.13+, newer torch/cuda runtimes, and core frontend architectures), many critical community custom nodes and toolsets have ceased active maintenance or broken compatibility (e.g. MediaPipe incompatibility on Python 3.13+, unmaintained Impact Pack, outdated Face Parsing, etc.). 
+
+**ComfyUI-Legacy-Tools** actively revives, consolidates, and maintains these essential legacy extensions within a single, unified, modern runtime environment:
 
 **Key Objectives:**
-- Replace MediaPipe-based implementations with InsightFace for Python 3.13+ compatibility
-- Consolidate and manage face detection/processing nodes in a single extension
-- Maintain functionality while ensuring compatibility with modern Python versions
+- **Facial Tools & MediaPipe Replacement**: Replace MediaPipe with InsightFace for seamless Python 3.13+ compatibility, providing unified face detection, segmentation, and restoration tools.
+- **Impact Pack Continuation**: Integrate and actively maintain essential detector and detailer toolsets ([ComfyUI-Impact-Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack)) to ensure full compatibility with modern ComfyUI releases.
+- **InSPyReNet Rembg**: High-precision salient object detection and background matting with MIT licensing and self-contained runtime shims.
+- **Face Parsing**: YOLOv8-powered face parsing and segmentation with modern setuptools support.
+- **Zero-Crash Guardrails**: Crash-proof utilities (e.g. `FacetoolsConstrainImage` with division-by-zero guards) for unconstrained dimensions.
 
 > [!WARNING]
 > **Important Limitation**: InsightFace does not provide the same level of detailed detection as MediaPipe. Some features may be limited compared to the original MediaPipe-based implementations. The original functionality may be restricted or simplified in some cases.
@@ -22,11 +26,11 @@ This extension was created to address the compatibility issue with MediaPipe in 
 2. Clone this repository into your `ComfyUI/custom_nodes` directory:
    ```bash
    cd ComfyUI/custom_nodes
-   git clone https://github.com/ussoewwin/comfyui_facetools_disabled_mediapipe.git
+   git clone https://github.com/ussoewwin/ComfyUI-Legacy-Tools.git
    ```
 3. Install dependencies from `requirements.txt`:
    ```bash
-   cd comfyui_facetools_disabled_mediapipe
+   cd ComfyUI-Legacy-Tools
    pip install -r requirements.txt
    ```
    **Important**: For Python 3.13 Windows users, see the [Installation Dependencies](#installation-dependencies) section below for special instructions.
@@ -133,7 +137,7 @@ pip install insightface-0.7.3-cp313-cp313-win_amd64.whl
 To install the dev dependencies and pre-commit (will run the ruff hook), do:
 
 ```bash
-cd comfyui_facetools_disabled_mediapipe
+cd ComfyUI-Legacy-Tools
 pip install -e .[dev]
 pre-commit install
 ```
