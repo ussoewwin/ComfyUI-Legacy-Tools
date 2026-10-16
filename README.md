@@ -2,6 +2,8 @@
 
 Comprehensive legacy extension consolidation and modern environment compatibility toolkit for ComfyUI by Sunx.ai.
 
+This repository integrates and actively continues development on essential ComfyUI extensions whose upstream/official development has ended or failed to keep pace with modern runtime environments.
+
 ## Project Purpose
 
 As ComfyUI runtime environments evolve (such as Python 3.13+, newer torch/cuda runtimes, and core frontend architectures), many critical community custom nodes and toolsets have ceased active maintenance or broken compatibility (e.g. MediaPipe incompatibility on Python 3.13+, unmaintained Impact Pack, outdated Face Parsing, etc.). 
