@@ -188,4 +188,3 @@ The following components are adapted from other repositories and may have differ
 - **Impact Pack nodes** (`nodes/impact-pack/`): Adapted from [ComfyUI-Impact-Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack) by Dr.Lt.Data (GPL-3.0).
 
 **Important**: When using these adapted components, you must comply with both this project's GPL-3.0 license and the licenses of the original repositories from which these components were adapted (GPL-3.0, MIT, and Apache-2.0).
-
