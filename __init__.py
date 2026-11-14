@@ -57,7 +57,19 @@ def _setup_albumentations_shim():
         import cv2
 
         a_mod = types.ModuleType("albumentations")
+        a_mod.__path__ = []
         ap_mod = types.ModuleType("albumentations.pytorch")
+        ap_mod.__path__ = []
+        core_mod = types.ModuleType("albumentations.core")
+        core_mod.__path__ = []
+        trans_mod = types.ModuleType("albumentations.core.transforms_interface")
+
+        class ImageOnlyTransform:
+            def __init__(self, *args, **kwargs):
+                pass
+        trans_mod.ImageOnlyTransform = ImageOnlyTransform
+        core_mod.transforms_interface = trans_mod
+        a_mod.core = core_mod
 
         class Compose:
             def __init__(self, transforms, **kwargs):
@@ -124,6 +136,8 @@ def _setup_albumentations_shim():
 
         sys.modules["albumentations"] = a_mod
         sys.modules["albumentations.pytorch"] = ap_mod
+        sys.modules["albumentations.core"] = core_mod
+        sys.modules["albumentations.core.transforms_interface"] = trans_mod
     except Exception:
         pass
 
